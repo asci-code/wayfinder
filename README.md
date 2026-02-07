@@ -44,9 +44,6 @@ Example payload:
 }
 ```
 
-## Dashboard
-The `/dashboard` route provides a visual snapshot of ranking output, cache status, and provider health for demo purposes.
-
 ## Local Development
 1. Install dependencies:
    ```bash
