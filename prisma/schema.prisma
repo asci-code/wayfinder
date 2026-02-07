@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Destination {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  country     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  profiles    DestinationProfile[]
+}
+
+model SearchRequest {
+  id          String   @id @default(uuid())
+  origin      String
+  budget      Float
+  dateStart   DateTime
+  dateEnd     DateTime
+  preferences Json?
+  weights     Json?
+  createdAt   DateTime @default(now())
+  profiles    DestinationProfile[]
+}
+
+model DestinationProfile {
+  id                 String   @id @default(uuid())
+  destinationId      String
+  searchRequestId    String
+  totalTripCost      Float
+  travelTimeHours    Float
+  weatherScore       Float
+  safetyScore        Float
+  visaFrictionScore  Float
+  seasonalityScore   Float
+  overallScore       Float
+  normalizedCost     Float
+  reasoning          Json
+  createdAt          DateTime @default(now())
+
+  destination Destination @relation(fields: [destinationId], references: [id])
+  searchRequest SearchRequest @relation(fields: [searchRequestId], references: [id])
+}
+
+model CachedSearch {
+  id          String   @id @default(uuid())
+  cacheKey    String   @unique
+  payload     Json
+  createdAt   DateTime @default(now())
+  expiresAt   DateTime
+}
+
+model RawProviderResponse {
+  id          String   @id @default(uuid())
+  provider    String
+  destination String
+  response    Json
+  createdAt   DateTime @default(now())
+}
