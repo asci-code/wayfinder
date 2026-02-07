@@ -10,6 +10,12 @@ export default function HomePage() {
         Use the <code>/api/recommendations</code> endpoint to request ranked
         recommendations.
       </p>
+
+      <p>
+        Visit the <a href="/dashboard">dashboard</a> to preview rankings and
+        system health.
+      </p>
+
     </main>
   );
 }
